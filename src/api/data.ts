@@ -1,4 +1,4 @@
-import { owClient2Dot5 } from './client'
+import { openWeatherClientData } from './client'
 import { openWeatherApiKey } from '@/constants'
 import { capitalize } from '@/utils/strings'
 
@@ -25,13 +25,11 @@ export const getCurrentWeather = async (
     )
   }
 
-  const response = await owClient2Dot5.get(
+  const response = await openWeatherClientData.get(
     `weather?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`,
   )
 
   const { weather, main, wind, clouds, dt, sys, name } = response.data
-
-  console.log(response.data)
 
   return {
     weatherDescription: capitalize(weather[0].description),

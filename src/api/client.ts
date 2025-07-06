@@ -1,8 +1,15 @@
 import axios from 'axios'
 
-export const owClient2Dot5 = axios.create({
+const defaultHeaders = {
+  'Content-Type': 'application/json',
+}
+
+export const openWeatherClientData = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5/',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: defaultHeaders,
+})
+
+export const openWeatherClientGeo = axios.create({
+  baseURL: 'https://api.openweathermap.org/geo/1.0/',
+  headers: defaultHeaders,
 })

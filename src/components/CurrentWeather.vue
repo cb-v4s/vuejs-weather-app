@@ -10,16 +10,15 @@ import {
   Cloudy,
   CloudFog,
 } from '@/components/icons'
-import { ref, computed } from 'vue'
+import { computed } from 'vue'
 import { useGetWeather } from '@/composables/useWeather'
 import { useClock } from '@/composables/useClock'
+import { useLocationStore } from '@/stores/location'
+import { storeToRefs } from 'pinia'
 
-const defaultLocation = {
-  lat: 10.4806,
-  lon: -66.9036,
-}
-const latitude = ref<number | null>(defaultLocation.lat)
-const longitude = ref<number | null>(defaultLocation.lon)
+const locationStore = useLocationStore()
+
+const { latitude, longitude } = storeToRefs(locationStore)
 
 const currentWeather = useGetWeather(latitude, longitude)
 
@@ -99,7 +98,7 @@ const localClock = useClock(dynamicTimezoneOffset)
     <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
       <div class="flex flex-col items-center relative">
         <p class="text-xs mb-1">Sea Level</p>
-        <Waves class="h-4 w-4 md:h-8 md:w-8" />
+        <Waves class="h-5 w-5 md:h-8 md:w-8" />
         <p class="text-sm mt-2">
           {{
             currentWeather.data.value?.seaLevel !== undefined
@@ -110,7 +109,7 @@ const localClock = useClock(dynamicTimezoneOffset)
       </div>
       <div class="flex flex-col items-center">
         <p class="text-xs mb-1">Humidity</p>
-        <Droplet class="h-4 w-4 md:h-8 md:w-8" />
+        <Droplet class="h-5 w-5 md:h-8 md:w-8" />
         <p class="text-sm mt-2">
           {{
             currentWeather.data.value?.humidity !== undefined
@@ -120,8 +119,8 @@ const localClock = useClock(dynamicTimezoneOffset)
         </p>
       </div>
       <div class="flex flex-col items-center">
-        <p class="text-xs mb-1">Wind Speed</p>
-        <Wind class="h-4 w-4 md:h-8 md:w-8" />
+        <p class="text-xs mb-1">Wind</p>
+        <Wind class="h-5 w-5 md:h-8 md:w-8" />
         <p class="text-sm mt-2">
           {{
             currentWeather.data.value?.wind !== undefined
@@ -132,7 +131,7 @@ const localClock = useClock(dynamicTimezoneOffset)
       </div>
       <div class="flex flex-col items-center">
         <p class="text-xs mb-1">Clouds</p>
-        <Cloudy class="h-4 w-4 md:h-8 md:w-8" />
+        <Cloudy class="h-5 w-5 md:h-8 md:w-8" />
         <p class="text-sm mt-2">
           {{
             currentWeather.data.value?.clouds !== undefined

@@ -3,7 +3,9 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import { QueryClient, VueQueryPlugin } from '@tanstack/vue-query'
+import { createPinia } from 'pinia'
 
+const pinia = createPinia()
 const app = createApp(App)
 
 const queryClient = new QueryClient({
@@ -21,5 +23,7 @@ const queryClient = new QueryClient({
 app.use(VueQueryPlugin, {
   queryClient,
 })
+
+app.use(pinia)
 
 app.mount('#app')
