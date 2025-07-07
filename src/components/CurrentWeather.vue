@@ -17,9 +17,7 @@ import { useLocationStore } from '@/stores/location'
 import { storeToRefs } from 'pinia'
 
 const locationStore = useLocationStore()
-
 const { latitude, longitude } = storeToRefs(locationStore)
-
 const currentWeather = useGetWeather(latitude, longitude)
 
 const getWeatherIconComponent = (weatherMain: string) => {

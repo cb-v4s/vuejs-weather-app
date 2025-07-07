@@ -13,3 +13,8 @@ export const openWeatherClientGeo = axios.create({
   baseURL: 'https://api.openweathermap.org/geo/1.0/',
   headers: defaultHeaders,
 })
+
+export const meteoClient = axios.create({
+  baseURL: 'https://api.open-meteo.com/v1/',
+  headers: defaultHeaders,
+})

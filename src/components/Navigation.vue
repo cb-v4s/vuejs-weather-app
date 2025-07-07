@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import BtnSearch from './BtnSearch.vue'
-import Modal from './ModalSearch.vue'
+import Modal from './SearchDialog.vue'
 
 import { ref } from 'vue'
 

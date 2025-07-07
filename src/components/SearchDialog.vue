@@ -45,7 +45,6 @@ const handleCityClick = (city: Todo) => {
 
 const performQuery = async (q: string) => {
   searchResults.value = await searchQuery(q)
-  console.log('search results:', searchResults)
 }
 
 watch(
@@ -88,6 +87,8 @@ watch(
               class="w-full outline-none focus:outline-none text-base font-semibold"
               type="text"
               placeholder="Search city"
+              autocomplete="off"
+              autocorrect="off"
               v-model="searchText"
             />
             <button
@@ -98,8 +99,7 @@ watch(
             </button>
           </div>
           <div class="pl-2 border-t-2 border-primary">
-            <p class="pl-2 text-sm text-secondary-text mt-4">Suggestions</p>
-            <div class="mt-6"></div>
+            <p class="pl-2 text-sm text-secondary-text mt-4 mb-6">Suggestions</p>
             <ul>
               <template v-if="searchResults.length > 0">
                 <li

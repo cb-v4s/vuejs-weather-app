@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import CurrentWeather from './CurrentWeather.vue'
+import MapViewer from './MapViewer.vue'
+import Forecast from './Forecast.vue'
 </script>
 
 <template>
@@ -7,9 +9,13 @@ import CurrentWeather from './CurrentWeather.vue'
     <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
       <CurrentWeather />
     </div>
-    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">02</div>
+    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
+      <MapViewer />
+    </div>
     <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">03</div>
-    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">04</div>
+    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
+      <Forecast />
+    </div>
     <div
       class="col-span-1 md:col-span-2 rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text"
     >
