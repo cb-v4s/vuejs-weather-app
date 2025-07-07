@@ -2,6 +2,7 @@
 import CurrentWeather from './CurrentWeather.vue'
 import MapViewer from './MapViewer.vue'
 import Forecast from './Forecast.vue'
+import OtherLargeCities from './OtherLargeCities.vue'
 </script>
 
 <template>
@@ -12,7 +13,9 @@ import Forecast from './Forecast.vue'
     <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
       <MapViewer />
     </div>
-    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">03</div>
+    <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
+      <OtherLargeCities />
+    </div>
     <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
       <Forecast />
     </div>

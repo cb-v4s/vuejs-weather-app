@@ -2,10 +2,7 @@
 import { useGetForecast } from '@/composables/useWeather'
 import { useLocationStore } from '@/stores/location'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
 
-// Import Lucide Icons you'll need. You'll import more as you map more codes.
-// You might want to import all of them, or selectively import based on your mapping.
 import {
   Sun, // For clear sky
   Cloud, // For cloudy, overcast, mainly clear
@@ -18,8 +15,6 @@ import {
   CloudSun, // For partly cloudy day
   CloudMoon, // For partly cloudy night
   ThermometerSnowflake, // For freezing rain/drizzle
-  Zap, // For general storm/lightning
-  // Add any other icons you might need
 } from 'lucide-vue-next'
 
 const locationStore = useLocationStore()
@@ -27,9 +22,6 @@ const { latitude, longitude } = storeToRefs(locationStore)
 
 const forecastData = useGetForecast(latitude, longitude)
 
-// Helper to interpret weather codes and return the Lucide Icon COMPONENT
-// The 'isDay' parameter is usually for current/hourly weather. For daily,
-// you might just use a general day icon or a single icon for the whole day.
 const getWeatherIconComponent = (code: number, isDay: boolean = true) => {
   switch (code) {
     case 0:
@@ -80,7 +72,6 @@ const getWeatherIconComponent = (code: number, isDay: boolean = true) => {
   }
 }
 
-// Helper to interpret weather codes for text description (keep this for accessibility)
 const getWeatherDescription = (code: number): string => {
   switch (code) {
     case 0:
@@ -131,7 +122,6 @@ const getWeatherDescription = (code: number): string => {
   }
 }
 
-// Optional: A computed property to format the date for display
 const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString('en-US', {
     weekday: 'short',
@@ -139,23 +129,15 @@ const formatDate = (dateString: string): string => {
     day: 'numeric',
   })
 }
-
-// Optional: A computed property to get the current day's name for the header
-const todayName = computed(() => {
-  if (forecastData.data.value?.daily?.time?.[0]) {
-    return new Date(forecastData.data.value.daily.time[0]).toLocaleDateString('en-US', {
-      weekday: 'long',
-    })
-  }
-  return 'Today'
-})
 </script>
 
 <template>
   <div class="p-6 text-primary-text">
     <h1 class="text-lg font-semibold mb-4">7 Day Forecast</h1>
 
-    <div v-if="forecastData.isLoading.value">N/A</div>
+    <div v-if="forecastData.isLoading.value">
+      <p class="text-secondary-text">N/A</p>
+    </div>
     <div v-else-if="forecastData.isError.value">
       Error: {{ forecastData.error.value?.message || 'Failed to load forecast.' }}
     </div>
@@ -183,8 +165,6 @@ const todayName = computed(() => {
       </li>
     </ul>
 
-    <div v-else class="text-center text-gray-500 dark:text-gray-400">
-      No forecast data available.
-    </div>
+    <div v-else class="text-center text-secondary-text">No forecast data available.</div>
   </div>
 </template>

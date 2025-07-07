@@ -1,19 +1,7 @@
 import { openWeatherClientData } from './client'
 import { openWeatherApiKey } from '@/constants'
+import type { CurrentWeatherResponse } from '@/types/main'
 import { capitalize } from '@/utils/strings'
-
-type CurrentWeatherResponse = {
-  humidity: number
-  wind: number
-  temperature: number
-  seaLevel: number
-  clouds: number
-  generalWeather: string
-  weatherDescription: string
-  timezone: number
-  country: string
-  city: string
-}
 
 export const getCurrentWeather = async (
   lat: number,

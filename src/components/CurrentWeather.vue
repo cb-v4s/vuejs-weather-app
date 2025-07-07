@@ -15,39 +15,11 @@ import { useGetWeather } from '@/composables/useWeather'
 import { useClock } from '@/composables/useClock'
 import { useLocationStore } from '@/stores/location'
 import { storeToRefs } from 'pinia'
+import { useMainWeatherIcon } from '@/composables/useWeatherIconLogic'
 
 const locationStore = useLocationStore()
 const { latitude, longitude } = storeToRefs(locationStore)
 const currentWeather = useGetWeather(latitude, longitude)
-
-const getWeatherIconComponent = (weatherMain: string) => {
-  switch (weatherMain) {
-    case 'Drizzle':
-      return CloudDrizzle
-    case 'Rain':
-      return CloudRain
-    case 'Snow':
-      return Snowflake
-    case 'Clear':
-      return Sun
-    case 'Clouds':
-      return Cloudy
-    case 'Mist':
-      return CloudFog
-    default:
-      return Sun
-  }
-}
-
-const currentMainWeatherIcon = computed(() => {
-  const weatherMainCondition = currentWeather.data.value?.generalWeather
-
-  if (weatherMainCondition) {
-    return getWeatherIconComponent(weatherMainCondition)
-  }
-
-  return Sun
-})
 
 const dynamicTimezoneOffset = computed(() => {
   // Ensure currentWeather.data.value is not null/undefined before accessing timezone
@@ -74,7 +46,10 @@ const localClock = useClock(dynamicTimezoneOffset)
       <p class="">{{ localClock.localTime.value ? localClock.localTime.value : 'Loading' }}</p>
     </div>
     <div class="flex justify-center items-center mt-6 mb-6 md:mt-8 md:mb-6">
-      <component :is="currentMainWeatherIcon" class="h-20 w-20" />
+      <component
+        :is="useMainWeatherIcon(currentWeather.data.value?.generalWeather ?? '')"
+        class="h-20 w-20"
+      />
       <div class="ml-4 relative">
         <p class="text-5xl font-black">
           {{

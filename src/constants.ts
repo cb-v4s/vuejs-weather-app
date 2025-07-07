@@ -1,7 +1,7 @@
-import type { Todo } from './types/main'
+import type { PopularCity } from './types/main'
 
 export const openWeatherApiKey = 'bf44bb5b9c31ac9cbd11ad3e14ce81bd'
-export const popularCities: Todo[] = [
+export const popularCities: PopularCity[] = [
   {
     name: 'Caracas',
     country: 'VE',
@@ -17,9 +17,9 @@ export const popularCities: Todo[] = [
     lon: 139.65,
   },
   {
-    name: 'Madrid',
-    country: 'ES',
-    state: 'Madrid',
+    name: 'Beijing',
+    country: 'CN',
+    state: 'Beijing',
     lat: 40.4165,
     lon: -3.7026,
   },
@@ -27,8 +27,8 @@ export const popularCities: Todo[] = [
     name: 'London',
     country: 'GB',
     state: 'London',
-    lat: 51.5074,
-    lon: -0.1278,
+    lat: 39.906217,
+    lon: 116.3912757,
   },
   {
     name: 'Sydney',
@@ -37,35 +37,18 @@ export const popularCities: Todo[] = [
     lat: -33.8688197,
     lon: 151.2092955,
   },
+  {
+    name: 'Paris',
+    country: 'FR',
+    state: 'Ile-de-France',
+    lat: 48.8588897,
+    lon: 2.3200410217200766,
+  },
+  {
+    name: 'Rome',
+    country: 'IT',
+    state: 'Lazio',
+    lat: 41.8933203,
+    lon: 12.4829321,
+  },
 ]
-
-export const WMOWeatherInterpretationCodes = {
-  0: 'Clear sky',
-  1: 'Mainly clear',
-  2: 'Partly cloudy',
-  3: 'Overcast',
-  45: 'Fog',
-  48: 'Depositing rime fog',
-  51: 'Light drizzle',
-  53: 'Moderate drizzle',
-  55: 'Dense drizzle',
-  56: 'Light freezing drizzle',
-  57: 'Dense freezing drizzle',
-  61: 'Slight rain',
-  63: 'Moderate rain',
-  65: 'Heavy rain',
-  66: 'Light freezing rain',
-  67: 'Heavy freezing rain',
-  71: 'Slight snowfall',
-  73: 'Moderate snowfall',
-  75: 'Heavy snowfall',
-  77: 'Snow grains',
-  80: 'Slight rain showers',
-  81: 'Moderate rain showers',
-  82: 'Violent rain showers',
-  85: 'Slight snow showers',
-  86: 'Heavy snow showers',
-  95: 'Thunderstorm',
-  96: 'Thunderstorm with slight hail',
-  99: 'Thunderstorm with heavy hail',
-}

@@ -33,8 +33,6 @@ export const getForecast = async (latitude: number, longitude: number): Promise<
 
   const { daily, daily_units } = response.data
 
-  console.log('Full Forecast API Response:', response.data) // Log full data for debugging
-
   return {
     daily, // Return the entire daily object
     daily_units, // Return the daily_units object

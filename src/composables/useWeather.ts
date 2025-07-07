@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/vue-query'
-import { getCurrentWeather } from '@/api/data'
+import { getCurrentWeather } from '@/api/weather'
 import { getForecast } from '@/api/meteo'
 import { computed, type Ref, unref } from 'vue'
 
