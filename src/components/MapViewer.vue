@@ -3,8 +3,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue' // Import nextTick
+import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import L from 'leaflet'
+import 'leaflet/dist/leaflet.css'
+
+import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png'
+import iconUrl from 'leaflet/dist/images/marker-icon.png'
+import shadowUrl from 'leaflet/dist/images/marker-shadow.png'
+
+L.Marker.prototype.options.icon = L.icon({
+  iconRetinaUrl: iconRetinaUrl,
+  iconUrl: iconUrl,
+  shadowUrl: shadowUrl,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  tooltipAnchor: [16, -28],
+  shadowSize: [41, 41],
+})
+
 import { useLocationStore } from '@/stores/location'
 import { storeToRefs } from 'pinia'
 
@@ -17,36 +34,31 @@ let mapInstance: L.Map | null = null
 let currentMarker: L.Marker | null = null
 
 onMounted(async () => {
-  // Use nextTick to ensure the DOM is fully rendered and the mapContainerRef
-  // has its final dimensions before Leaflet tries to initialize.
   await nextTick()
 
   if (mapContainerRef.value && !mapInstance) {
-    // Ensure map not already initialized
     mapInstance = L.map(mapContainerRef.value, {
-      // Optional: Add some map options that might help with behavior
-      zoomControl: true, // Display zoom +/- buttons
-      attributionControl: true, // Display attribution text
-      scrollWheelZoom: true, // Enable zoom with scroll wheel
-    }).setView([Number(latitude.value), Number(longitude.value)], 10) // Center on Caracas, zoom 10
+      zoomControl: true,
+      attributionControl: true,
+      scrollWheelZoom: true,
+    }).setView([Number(latitude.value), Number(longitude.value)], 10)
 
     L.tileLayer(`https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png`, {
       maxZoom: 20,
       minZoom: 0,
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     }).addTo(mapInstance)
 
     mapInstance.on('click', (e: L.LeafletMouseEvent) => {
       const { lat, lng } = e.latlng
 
-      // 1. Remove existing marker if any
       if (currentMarker) {
-        currentMarker.remove() // Remove the marker from the map
+        currentMarker.remove()
       }
 
-      // 2. Create a new marker at the clicked location
       currentMarker = L.marker([lat, lng]).addTo(mapInstance!)
 
-      // update global state with new location
       locationStore.setLocation(lat, lng)
     })
 
@@ -54,30 +66,27 @@ onMounted(async () => {
       currentMarker = L.marker([latitude.value, longitude.value]).addTo(mapInstance)
     }
 
-    // Crucial for ensuring Leaflet correctly calculates its viewport
-    // especially if the container's size is dynamic or set after the initial render.
-    // Call it once after the map is fully set up.
     mapInstance.invalidateSize()
   }
 })
 
 onUnmounted(() => {
   if (mapInstance) {
-    mapInstance.remove() // Properly removes the map from the DOM and cleans up listeners
+    mapInstance.remove()
     mapInstance = null
   }
 
   if (currentMarker) {
-    currentMarker.remove() // Remove the marker as well
+    currentMarker.remove()
     currentMarker = null
   }
 })
 
 const updateMarker = (lat: number, lon: number) => {
-  if (!mapInstance) return // Ensure map is initialized
+  if (!mapInstance) return
 
   if (currentMarker) {
-    currentMarker.remove() // Remove existing marker
+    currentMarker.remove()
   }
   currentMarker = L.marker([lat, lon]).addTo(mapInstance)
 }
@@ -85,7 +94,6 @@ const updateMarker = (lat: number, lon: number) => {
 watch(
   [latitude, longitude],
   ([newLat, newLon]) => {
-    // Only update if map is initialized and new coordinates are valid numbers
     if (
       mapInstance &&
       newLat !== null &&
@@ -93,10 +101,8 @@ watch(
       typeof newLat === 'number' &&
       typeof newLon === 'number'
     ) {
-      const currentZoom = mapInstance.getZoom() // Keep current zoom level
+      const currentZoom = mapInstance.getZoom()
       mapInstance.setView([newLat, newLon], currentZoom)
-
-      // Also update the marker's position
       updateMarker(newLat, newLon)
     }
   },
