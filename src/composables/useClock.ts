@@ -20,7 +20,6 @@ export const useClock = (
         const targetMoment = moment.utc().utcOffset(offsetValue / 60)
 
         const formattedTime = targetMoment.format('h:mm:ss A') // e.g. 3:03:56 PM
-        console.log('time:', formattedTime)
         localTime.value = formattedTime
       }
 

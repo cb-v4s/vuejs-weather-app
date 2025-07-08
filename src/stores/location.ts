@@ -11,15 +11,12 @@ export const useLocationStore = defineStore('location', () => {
   const actualLat = window.localStorage.getItem('latitude')
   const actualLon = window.localStorage.getItem('longitude')
 
-  const latitude = ref<number | null>(null)
-  const longitude = ref<number | null>(null)
+  const latitude = ref<number | null>(defaultLocation.lat)
+  const longitude = ref<number | null>(defaultLocation.lon)
 
   if (actualLat?.length && actualLon?.length) {
     latitude.value = Number(actualLat)
     longitude.value = Number(actualLon)
-  } else {
-    latitude.value = defaultLocation.lat
-    longitude.value = defaultLocation.lon
   }
 
   if (navigator.geolocation) {
