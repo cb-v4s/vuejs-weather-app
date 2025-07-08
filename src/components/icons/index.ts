@@ -10,4 +10,5 @@ export {
   CloudFog,
   Moon,
   Search,
+  MapPin,
 } from 'lucide-vue-next'

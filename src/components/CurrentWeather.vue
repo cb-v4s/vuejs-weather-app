@@ -1,15 +1,5 @@
 <script setup lang="ts">
-import {
-  Droplet,
-  Waves,
-  Wind,
-  CloudDrizzle,
-  CloudRain,
-  Snowflake,
-  Sun,
-  Cloudy,
-  CloudFog,
-} from '@/components/icons'
+import { Droplet, Waves, Wind, Cloudy, MapPin } from '@/components/icons'
 import { computed } from 'vue'
 import { useGetWeather } from '@/composables/useWeather'
 import { useClock } from '@/composables/useClock'
@@ -22,11 +12,9 @@ const { latitude, longitude } = storeToRefs(locationStore)
 const currentWeather = useGetWeather(latitude, longitude)
 
 const dynamicTimezoneOffset = computed(() => {
-  // Ensure currentWeather.data.value is not null/undefined before accessing timezone
-  return currentWeather.data.value?.timezone // Assuming your CurrentWeatherResponse now includes 'timezone'
+  return currentWeather.data.value?.timezone
 })
 
-// Use the new useClock composable
 const localClock = useClock(dynamicTimezoneOffset)
 </script>
 
@@ -42,6 +30,7 @@ const localClock = useClock(dynamicTimezoneOffset)
             ? currentWeather.data.value?.country
             : 'N/A'
         }}
+        <MapPin class="w-5 h-5 inline-block -mt-1" />
       </h1>
       <p class="">{{ localClock.localTime.value ? localClock.localTime.value : 'Loading' }}</p>
     </div>

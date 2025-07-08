@@ -10,26 +10,28 @@ export const useClock = (
   watchEffect((onCleanup) => {
     const offsetValue = unref(timezoneOffsetSeconds)
 
-    if (intervalId) {
+    if (intervalId !== undefined) {
       clearInterval(intervalId)
+      intervalId = undefined
     }
 
     if (typeof offsetValue === 'number') {
       const update = () => {
-        const localMoment = moment().utcOffset(offsetValue / 60)
+        const targetMoment = moment.utc().utcOffset(offsetValue / 60)
 
-        const formattedTime = localMoment.format('h:mm:ss A') // e.g. 3:03:56 PM
+        const formattedTime = targetMoment.format('h:mm:ss A') // e.g. 3:03:56 PM
+        console.log('time:', formattedTime)
         localTime.value = formattedTime
       }
 
       update()
 
-      intervalId = setInterval(update, 1000)
+      intervalId = setInterval(update, 1000) as number
 
       onCleanup(() => {
-        if (intervalId) {
+        if (intervalId !== undefined) {
           clearInterval(intervalId)
-          intervalId = undefined // Clear the stored ID
+          intervalId = undefined
         }
       })
     } else {
@@ -38,8 +40,9 @@ export const useClock = (
   })
 
   onUnmounted(() => {
-    if (intervalId) {
+    if (intervalId !== undefined) {
       clearInterval(intervalId)
+      intervalId = undefined
     }
   })
 

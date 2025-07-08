@@ -17,7 +17,7 @@ export const getCurrentWeather = async (
     `weather?lat=${lat}&lon=${lon}&appid=${openWeatherApiKey}&units=metric`,
   )
 
-  const { weather, main, wind, clouds, dt, sys, name } = response.data
+  const { weather, main, wind, clouds, sys, name, timezone } = response.data
 
   return {
     weatherDescription: capitalize(weather[0].description),
@@ -27,7 +27,7 @@ export const getCurrentWeather = async (
     seaLevel: main.sea_level,
     wind: wind.speed,
     temperature: main.temp,
-    timezone: dt,
+    timezone,
     country: sys.country,
     city: name,
   }
