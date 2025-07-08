@@ -7,7 +7,6 @@ import { ref, onMounted, onUnmounted, nextTick, watch } from 'vue' // Import nex
 import L from 'leaflet'
 import { useLocationStore } from '@/stores/location'
 import { storeToRefs } from 'pinia'
-import { stadiaMapsApiKey } from '@/constants'
 
 const locationStore = useLocationStore()
 
@@ -31,13 +30,10 @@ onMounted(async () => {
       scrollWheelZoom: true, // Enable zoom with scroll wheel
     }).setView([Number(latitude.value), Number(longitude.value)], 10) // Center on Caracas, zoom 10
 
-    L.tileLayer(
-      `https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png&api_key=${stadiaMapsApiKey}`,
-      {
-        maxZoom: 20,
-        minZoom: 0,
-      },
-    ).addTo(mapInstance)
+    L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+      maxZoom: 20,
+      minZoom: 0,
+    }).addTo(mapInstance)
 
     mapInstance.on('click', (e: L.LeafletMouseEvent) => {
       const { lat, lng } = e.latlng

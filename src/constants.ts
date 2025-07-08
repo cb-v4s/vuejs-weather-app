@@ -1,7 +1,6 @@
 import type { PopularCity } from './types/main'
 
 export const openWeatherApiKey = 'bf44bb5b9c31ac9cbd11ad3e14ce81bd'
-export const stadiaMapsApiKey = 'ed385a75-f14a-41e3-a9e5-218ca93c60a6'
 export const popularCities: PopularCity[] = [
   {
     name: 'Caracas',
