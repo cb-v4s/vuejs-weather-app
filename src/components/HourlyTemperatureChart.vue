@@ -33,8 +33,6 @@ const fetchHourly = async () => {
 
   hourlyTimes.value = times
   hourlyTemperatures.value = temperatures
-
-  console.log('hourly', hourlyTimes.value, hourlyTemperatures.value)
 }
 
 onMounted(() => {

@@ -30,7 +30,7 @@ onMounted(async () => {
       scrollWheelZoom: true, // Enable zoom with scroll wheel
     }).setView([Number(latitude.value), Number(longitude.value)], 10) // Center on Caracas, zoom 10
 
-    L.tileLayer(`https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`, {
+    L.tileLayer(`https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png`, {
       maxZoom: 20,
       minZoom: 0,
     }).addTo(mapInstance)
