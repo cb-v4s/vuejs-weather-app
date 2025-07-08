@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/vue-query'
 import { getCurrentWeather } from '@/api/weather'
-import { getForecast } from '@/api/meteo'
+import { get7DayHourlyForecast, getForecast } from '@/api/meteo'
 import { computed, type Ref, unref } from 'vue'
 
 export const useGetWeather = (
@@ -54,6 +54,34 @@ export const useGetForecast = (
       }
 
       return await getForecast(lat!, lon!)
+    },
+    enabled: isQueryEnabled,
+  })
+}
+
+export const useGet7DayHourlyForecast = (
+  latRef: Ref<number | null | undefined>,
+  lonRef: Ref<number | null | undefined>,
+) => {
+  const queryKey = computed(() => {
+    return ['7dayhourly', unref(latRef), unref(lonRef)]
+  })
+
+  const isQueryEnabled = computed(() => {
+    return typeof unref(latRef) === 'number' && typeof unref(lonRef) === 'number'
+  })
+
+  return useQuery({
+    queryKey: ['7dayhourly', queryKey],
+    queryFn: async () => {
+      const lat = unref(latRef)
+      const lon = unref(lonRef)
+
+      if (typeof lat !== 'number' || typeof lon !== 'number') {
+        throw new Error('Latitude or Longitude is not a number for API call')
+      }
+
+      return await get7DayHourlyForecast(lat!, lon!)
     },
     enabled: isQueryEnabled,
   })

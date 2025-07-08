@@ -3,7 +3,7 @@ import { Search } from '@/components/icons'
 import { popularCities } from '@/constants'
 import { useLocationStore } from '@/stores/location'
 import type { Todo } from '@/types/main'
-import { ref, watch } from 'vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
 import { searchQuery } from '@/api/geo'
 
 const searchText = ref('')
@@ -67,6 +67,22 @@ watch(
   },
   { immediate: false },
 )
+
+const searchInput = ref<HTMLInputElement | null>(null)
+
+watch(
+  isVisible,
+  (newVal) => {
+    if (newVal === true) {
+      nextTick(() => {
+        if (searchInput.value) {
+          searchInput.value.focus()
+        }
+      })
+    }
+  },
+  { immediate: true },
+)
 </script>
 
 <template>
@@ -84,6 +100,7 @@ watch(
           <div class="pl-4 flex justify-between items-center mb-2">
             <Search class="w-5 h-5 mr-4" />
             <input
+              ref="searchInput"
               class="w-full outline-none focus:outline-none text-base font-semibold"
               type="text"
               placeholder="Search city"
@@ -92,7 +109,7 @@ watch(
               v-model="searchText"
             />
             <button
-              class="text-2xl leading-none cursor-pointer ml-auto mr-2 -mt-1"
+              class="text-2xl leading-none cursor-pointer ml-auto mr-2 -mt-1 outline-none focus:outline-none"
               @click="closeModal"
             >
               &times;

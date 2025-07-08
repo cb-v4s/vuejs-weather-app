@@ -132,7 +132,7 @@ const formatDate = (dateString: string): string => {
 </script>
 
 <template>
-  <div class="p-6 text-primary-text">
+  <div class="p-6 text-primary-text select-none">
     <h1 class="text-lg font-semibold mb-4">7 Day Forecast</h1>
 
     <div v-if="forecastData.isLoading.value">
@@ -148,7 +148,7 @@ const formatDate = (dateString: string): string => {
         :key="time"
         class="flex items-center justify-between mt-3"
       >
-        <p class="font-semibold w-1/3">
+        <p>
           {{ formatDate(time) }}
         </p>
 

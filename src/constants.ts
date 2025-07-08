@@ -10,6 +10,13 @@ export const popularCities: PopularCity[] = [
     lon: -66.916664,
   },
   {
+    name: 'Los Angeles',
+    country: 'US',
+    state: 'California',
+    lat: 34.0536909,
+    lon: -118.242766,
+  },
+  {
     name: 'Tokyo',
     country: 'JP',
     state: 'Tokyo',
@@ -20,15 +27,15 @@ export const popularCities: PopularCity[] = [
     name: 'Beijing',
     country: 'CN',
     state: 'Beijing',
-    lat: 40.4165,
-    lon: -3.7026,
+    lat: 39.906217,
+    lon: 116.3912757,
   },
   {
     name: 'London',
     country: 'GB',
     state: 'London',
-    lat: 39.906217,
-    lon: 116.3912757,
+    lat: 51.5073219,
+    lon: -0.1276474,
   },
   {
     name: 'Sydney',

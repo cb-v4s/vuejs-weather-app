@@ -12,17 +12,17 @@ interface DailyForecastData {
 interface Forecast {
   daily: DailyForecastData
   daily_units: {
-    // It's good to include units if you use them for display
     time: string
     temperature_2m_max: string
     temperature_2m_min: string
     weather_code: string
     uv_index_max: string
   }
-  // You might also want to include timezone, latitude, longitude from the top level
-  // latitude: number;
-  // longitude: number;
-  // timezone: string;
+}
+
+type HourlyForecast = {
+  times: string[]
+  temperatures: number[]
 }
 
 export const getForecast = async (latitude: number, longitude: number): Promise<Forecast> => {
@@ -36,5 +36,24 @@ export const getForecast = async (latitude: number, longitude: number): Promise<
   return {
     daily, // Return the entire daily object
     daily_units, // Return the daily_units object
+  }
+}
+
+export const get7DayHourlyForecast = async (
+  latitude: number,
+  longitude: number,
+): Promise<HourlyForecast> => {
+  const days = 7
+  const hourlyQuery = ['uv_index', 'temperature_2m']
+
+  const response = await meteoClient.get(
+    `forecast?latitude=${latitude}&longitude=${longitude}&hourly=${hourlyQuery.join()}&forecast_days=${days}`,
+  )
+
+  const { hourly } = response.data
+
+  return {
+    times: hourly.time,
+    temperatures: hourly.temperature_2m,
   }
 }
