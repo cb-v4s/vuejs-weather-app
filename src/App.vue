@@ -6,7 +6,7 @@ import Footer from './components/Footer.vue'
 
 <template>
   <header>
-    <div class="min-h-screen min-w-screen bg-secondary flex flex-col px-4 md:px-60">
+    <div class="min-h-screen min-w-screen bg-secondary flex flex-col px-4 md:px-60 crt">
       <Navigation />
       <Layout />
       <Footer />
