@@ -11,4 +11,5 @@ export {
   Moon,
   Search,
   MapPin,
+  Github,
 } from 'lucide-vue-next'
