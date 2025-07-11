@@ -1,21 +1,14 @@
 <script setup lang="ts">
-import { Droplet, Waves, Wind, Cloudy, MapPin } from '@/components/icons'
-import { computed } from 'vue'
+import { Cloudy, Droplet, MapPin, Waves, Wind } from '@/components/icons'
 import { useGetWeather } from '@/composables/useWeather'
-import { useClock } from '@/composables/useClock'
-import { useLocationStore } from '@/stores/location'
-import { storeToRefs } from 'pinia'
 import { useMainWeatherIcon } from '@/composables/useWeatherIconLogic'
+import { useLocationStore } from '@/stores/location'
+import AnalogClock from './AnalogClock.vue'
+import { storeToRefs } from 'pinia'
 
 const locationStore = useLocationStore()
 const { latitude, longitude } = storeToRefs(locationStore)
 const currentWeather = useGetWeather(latitude, longitude)
-
-const dynamicTimezoneOffset = computed(() => {
-  return currentWeather.data.value?.timezone
-})
-
-const localClock = useClock(dynamicTimezoneOffset)
 </script>
 
 <template>
@@ -32,30 +25,37 @@ const localClock = useClock(dynamicTimezoneOffset)
         }}
         <MapPin class="w-5 h-5 inline-block -mt-1" />
       </h1>
-      <p class="">{{ localClock.localTime.value ? localClock.localTime.value : 'Loading' }}</p>
+      <p class="">{{ latitude && longitude ? `${latitude}, ${longitude}` : 'Loading' }}</p>
     </div>
-    <div class="flex justify-center items-center mt-6 mb-6 md:mt-8 md:mb-6">
-      <component
-        :is="useMainWeatherIcon(currentWeather.data.value?.generalWeather ?? '')"
-        class="h-20 w-20"
-      />
-      <div class="ml-4 relative">
-        <p class="text-5xl font-black">
-          {{
-            currentWeather.data.value?.temperature !== undefined
-              ? currentWeather.data.value?.temperature.toFixed(0)
-              : 'N/A'
-          }}
-          <span class="inline-block font-semibold text-xl absolute">°c</span>
-        </p>
-        <p class="text-sm">
-          {{
-            currentWeather.data.value?.weatherDescription !== undefined
-              ? currentWeather.data.value?.weatherDescription
-              : 'N/A'
-          }}
-        </p>
+    <div class="flex items-center justify-center mt-6 mb-10 md:mt-4 md:mb-6">
+      <div class="flex">
+        <component
+          :is="useMainWeatherIcon(currentWeather.data.value?.generalWeather ?? '')"
+          class="h-16 w-16 md:h-20 md:w-20"
+        />
+        <div class="ml-4 relative">
+          <p class="text-3xl md:text-5xl font-black">
+            {{
+              currentWeather.data.value?.temperature !== undefined
+                ? currentWeather.data.value?.temperature.toFixed(0)
+                : 'N/A'
+            }}
+            <span class="inline-block font-semibold text-xl absolute">°c</span>
+          </p>
+          <p class="text-sm">
+            {{
+              currentWeather.data.value?.weatherDescription !== undefined
+                ? currentWeather.data.value?.weatherDescription
+                : 'N/A'
+            }}
+          </p>
+        </div>
       </div>
+
+      <AnalogClock
+        v-if="currentWeather.data.value?.timezone !== undefined"
+        :timezone="currentWeather.data.value?.timezone"
+      />
     </div>
     <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
       <div class="flex flex-col items-center relative">
