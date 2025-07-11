@@ -27,14 +27,14 @@ const currentWeather = useGetWeather(latitude, longitude)
       </h1>
       <p class="">{{ latitude && longitude ? `${latitude}, ${longitude}` : 'Loading' }}</p>
     </div>
-    <div class="flex items-center justify-center mt-6 mb-10 md:mt-4 md:mb-6">
-      <div class="flex">
+    <div class="flex items-center justify-center flex-col md:flex-row mt-6 mb-10 md:mt-4 md:mb-6">
+      <div class="flex mb-8 md:mb-0">
         <component
           :is="useMainWeatherIcon(currentWeather.data.value?.generalWeather ?? '')"
-          class="h-16 w-16 md:h-20 md:w-20"
+          class="h-20 w-20"
         />
-        <div class="ml-4 relative">
-          <p class="text-3xl md:text-5xl font-black">
+        <div class="ml-2 md:ml-4 relative">
+          <p class="text-5xl font-black">
             {{
               currentWeather.data.value?.temperature !== undefined
                 ? currentWeather.data.value?.temperature.toFixed(0)
