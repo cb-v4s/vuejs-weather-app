@@ -7,7 +7,7 @@ import HourlyTemperatureChart from './HourlyTemperatureChart.vue'
 </script>
 
 <template>
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 px-6 pb-6">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 px-6 pb-6">
     <div class="rounded-lg min-h-80 bg-primary shadow-md shadow-secondary-text">
       <CurrentWeather />
     </div>

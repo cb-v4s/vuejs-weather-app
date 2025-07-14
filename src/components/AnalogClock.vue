@@ -94,7 +94,7 @@ watch(
 </script>
 
 <template>
-  <div class="wrapper ml-6 md:ml-10">
+  <div class="wrapper ml-6 xl:ml-10">
     <div ref="numberHoursRef" class="number-hours"></div>
     <div ref="barSecondsRef" class="bar-seconds"></div>
     <div class="hands-box">

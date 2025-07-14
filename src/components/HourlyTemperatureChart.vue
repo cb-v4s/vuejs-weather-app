@@ -1,7 +1,3 @@
-<template v-if="hourlyTimes.length > 0 && hourlyTemperatures.length > 0">
-  <Line :data="chartData" :options="chartOptions" />
-</template>
-
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { Line } from 'vue-chartjs'
@@ -126,6 +122,16 @@ const chartOptions: ChartOptions<'line'> = {
 }
 </script>
 
+<template v-if="hourlyTimes.length > 0 && hourlyTemperatures.length > 0">
+  <div class="chart-wrapper">
+    <Line :data="chartData" :options="chartOptions" />
+  </div>
+</template>
+
 <style scoped>
-/* You might want to give the chart container a specific height in the parent component */
+.chart-wrapper {
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
 </style>
